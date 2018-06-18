@@ -44,7 +44,7 @@
         </li>
     
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-          <a class="nav-link" href="tables.html">
+          <a class="nav-link" href="tables.php">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Bus Status</span>
           </a>
@@ -245,8 +245,27 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <!--php code to retrieve from DB-->
-                <?php include 'dataConfig.php';?>
-              </tbody>
+           <?php 
+                 $con= mysql_connect("10.100.11.200","transitFX","transitFX!23");
+                  if($con){
+                      die("Cannot connect:".mysql_error());
+                  }
+                  mysql_select_db("busStatus",$con);
+                  $sql="SELECT*FROM test";
+                  $myData =mysql_query($sql,$con);
+                   echo "<table border = 1>";
+                  while($record=mysql_fetch_array($myData)){
+                   echo"<tr>";
+                      echo "<td>".record['OS']."</td>";
+                      echo "<td>".record['RepairStatus']."</td>";
+                      echo"</tr>";
+                  }
+echo "</table>";
+mysql_close($con);
+              
+                    ?>
+
+              </thead>
             </table>
           </div>
         </div>
